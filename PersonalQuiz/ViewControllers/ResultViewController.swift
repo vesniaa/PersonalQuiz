@@ -9,37 +9,46 @@ import UIKit
 
 class ResultViewController: UIViewController {
 
-    
+    //MARK: - IB Outlets
     @IBOutlet weak var resultNavigationItem: UINavigationItem!
     @IBOutlet weak var animalLabel: UILabel!
     @IBOutlet weak var characteristicLabel: UILabel!
     
-    var answersChosen: [Answer]!
-
+    //MARK: - Public Properties
+    var answers: [Answer] = []
+    
+    //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationItem()
-        setupLabels()
-
-    }
-    private func setupNavigationItem() {
-        navigationItem.hidesBackButton = true
-        navigationItem.leftBarButtonItem = nil
-    }
-    private func setupLabels() {
-        if let animalType = getFrequentAnimalTypeInAnswers() {
-            animalLabel.text = "Вы - \(animalType.rawValue)!"
-            characteristicLabel.text = animalType.definition
-        }
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        getResult()
+        
     }
     
-    private func getFrequentAnimalTypeInAnswers() -> AnimalType? {
-        var countAnimalTypes: [AnimalType: Int] = [:]
-        for answer in answersChosen {
-            let answerType = answer.type
-            countAnimalTypes[answerType] = (countAnimalTypes[answerType] ?? 0) + 1
+    //MARK: - Private Methods
+        private func getResult() {
+           
+            var answersCounts: [AnimalType: Int] = [
+                AnimalType.dog : 0,
+                AnimalType.cat : 0,
+                AnimalType.rabbit : 0,
+                AnimalType.turtle : 0
+            ]
+            
+            for answer in answers {
+                answersCounts[answer.type]! += 1
+            }
+            
+            let sortedAnswersCounts = answersCounts.sorted { $0.1 > $1.1 }
+            
+            let resultType = sortedAnswersCounts.first?.key
+            let typeCharacter = resultType?.rawValue
+            
+            animalLabel.text = "Вы - \(typeCharacter!)!"
+            characteristicLabel.text = resultType?.definition
+
         }
-        
-        return countAnimalTypes.max { $0.value < $1.value }?.key
+    
     }
-}
+
+

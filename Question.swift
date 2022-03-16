@@ -7,12 +7,6 @@
 
 import Foundation
 
-enum ResponseType {
-    case single
-    case multiple
-    case ranged
-}
-
 struct Question {
     let text: String
     let type: ResponseType
@@ -54,4 +48,10 @@ extension Question {
             )
         ]
     }
+}
+
+enum ResponseType {
+    case single
+    case multiple
+    case ranged
 }

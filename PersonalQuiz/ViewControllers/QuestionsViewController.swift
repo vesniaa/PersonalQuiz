@@ -9,6 +9,7 @@ import UIKit
 
 class QuestionsViewController: UIViewController {
     
+    //MARK: - IB Outlets
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var questionProgressView: UIProgressView!
     
@@ -29,24 +30,20 @@ class QuestionsViewController: UIViewController {
         }
     }
     
+    //MARK: - Private Properties
     private let questions = Question.getQuestions()
     private var questionIndex = 0
     private var answersChosen: [Answer] = []
     private var currentAnswers: [Answer] {
         questions[questionIndex].answers
     }
-     
+    //MARK: - Life Cycles Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let resultVC = segue.destination as? ResultViewController {
-            resultVC.answersChosen = answersChosen
-        }
-    }
-    
+    //MARK: - IB Actions
     @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
         guard let currentIndex = singleButtons.firstIndex(of: sender) else { return }
         let currentAnswer = currentAnswers[currentIndex]
@@ -90,9 +87,12 @@ extension QuestionsViewController {
     
     private func showCurrentAnswers(for type: ResponseType) {
         switch type {
-        case .single: showSingleStackView(with: currentAnswers)
-        case .multiple: showMultipleStackView(with: currentAnswers)
-        case .ranged: showRangedStackView(with: currentAnswers)
+        case .single:
+            showSingleStackView(with: currentAnswers)
+        case .multiple:
+            showMultipleStackView(with: currentAnswers)
+        case .ranged:
+            showRangedStackView(with: currentAnswers)
         }
     }
     
@@ -130,4 +130,10 @@ extension QuestionsViewController {
         performSegue(withIdentifier: "showResult", sender: nil)
     }
 }
-
+//MARK: - Navigation
+extension QuestionsViewController {
+override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    guard let resultVC = segue.destination as? ResultViewController else { return }
+    resultVC.answers = answersChosen
+    }
+}
