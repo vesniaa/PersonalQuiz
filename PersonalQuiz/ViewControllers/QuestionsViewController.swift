@@ -71,7 +71,6 @@ class QuestionsViewController: UIViewController {
 // MARK: - Private Methods
 extension QuestionsViewController {
     private func updateUI() {
-       
         for stackView in [singleStackView, multipleStackView, rangedStackView] {
             stackView?.isHidden = true
         }
@@ -107,7 +106,7 @@ extension QuestionsViewController {
     
     private func showMultipleStackView(with answers: [Answer]) {
         multipleStackView.isHidden = false
-      
+        
         for (label, answer) in zip(multipleLabels, answers) {
             label.text = answer.text
         }
