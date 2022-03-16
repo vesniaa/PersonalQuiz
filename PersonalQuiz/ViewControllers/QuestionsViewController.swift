@@ -65,6 +65,7 @@ class QuestionsViewController: UIViewController {
         answersChosen.append(currentAnswers[index])
         nextQuestion()
     }
+    
 }
 
 // MARK: - Private Methods
@@ -106,7 +107,7 @@ extension QuestionsViewController {
     
     private func showMultipleStackView(with answers: [Answer]) {
         multipleStackView.isHidden = false
-        
+      
         for (label, answer) in zip(multipleLabels, answers) {
             label.text = answer.text
         }
