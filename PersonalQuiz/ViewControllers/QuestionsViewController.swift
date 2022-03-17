@@ -97,7 +97,7 @@ extension QuestionsViewController {
     }
     
     private func showSingleStackView(with answers: [Answer]) {
-        singleStackView.isHidden = false
+        singleStackView.isHidden.toggle()
         
         for (button, answer) in zip(singleButtons, answers) {
             button.setTitle(answer.text, for: .normal)
@@ -105,15 +105,15 @@ extension QuestionsViewController {
     }
     
     private func showMultipleStackView(with answers: [Answer]) {
-        multipleStackView.isHidden = false
-        
+        multipleStackView.isHidden.toggle()
+       
         for (label, answer) in zip(multipleLabels, answers) {
             label.text = answer.text
         }
     }
     
     private func showRangedStackView(with answers: [Answer]) {
-        rangedStackView.isHidden = false
+        rangedStackView.isHidden.toggle()
         
         rangedLabels.first?.text = answers.first?.text
         rangedLabels.last?.text = answers.last?.text
